@@ -2,8 +2,6 @@
 #include <windows.h>
 #include <time.h>
 
-#define BILLION  1000000000.0;
-
 using namespace std;
 
 struct timespec start, end;
@@ -71,7 +69,13 @@ int main() {
 		
 	}
 	
+	struct timespec tstart={0,0}, tend={0,0};
+ 	
+    clock_gettime(CLOCK_MONOTONIC, &tstart);
+	
 	procedimiento_Multiplicacion(a,b,c,n,m);
+
+	clock_gettime(CLOCK_MONOTONIC, &tend);
 
 	for(int i=0; i<n;i++){
 		
@@ -115,5 +119,9 @@ int main() {
 	delete a;
 	delete b;
 	delete c;
+
+	printf("El tiempo que ha tardado es: %.5f nanosegundos.\n",
+          ((double)tend.tv_nsec) - 
+          ((double)tstart.tv_nsec));
 
 }
