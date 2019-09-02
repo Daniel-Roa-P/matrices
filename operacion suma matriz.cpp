@@ -1,9 +1,6 @@
 #include <iostream>
-#include <stdlib.h>     
-#include <windows.h>
+#include <stdlib.h>   
 #include <time.h>
-
-#define BILLION  1000000000.0;
 
 using namespace std;
 
@@ -30,6 +27,8 @@ procedimiento_Suma( int **a, int **b, int **c, int n, int m ){
 
 int main() {
 	
+	while(true){
+	
 	cout<<"Ingrese N"<<endl;
 	cin>>n;
 	
@@ -54,7 +53,14 @@ int main() {
 		
 	}
 	
-	procedimiento_Suma(a,b,c,n,m);
+ 	struct timespec tstart={0,0}, tend={0,0};
+ 	
+    clock_gettime(CLOCK_MONOTONIC, &tstart);
+    
+    procedimiento_Suma(a,b,c,n,m);
+    
+    clock_gettime(CLOCK_MONOTONIC, &tend);
+	
 	
 	for(int i=0; i<n;i++){
 		
@@ -92,5 +98,11 @@ int main() {
 	delete a;
 	delete b;
 	delete c;
+	
+	printf("El tiempo que ha tardado es: %.5f nanosegundos.\n",
+          ((double)tend.tv_nsec) - 
+          ((double)tstart.tv_nsec));
+           
+	}
 	
 }
